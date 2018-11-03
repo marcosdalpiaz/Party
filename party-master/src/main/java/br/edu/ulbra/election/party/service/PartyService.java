@@ -72,11 +72,10 @@ public class PartyService {
             throw new GenericOutputException(MESSAGE_PARTY_NOT_FOUND);
         }
 
-        party.setEmail(partyInput.getEmail());
+        party.setCode(partyInput.getCode());
         party.setName(partyInput.getName());
-        if (!StringUtils.isBlank(partyInput.getPassword())) {
-        	party.setPassword(passwordEncoder.encode(partyInput.getPassword()));
-        }
+        party.setNumber(partyInput.getNumber());
+        
         party = partyRepository.save(party);
         return modelMapper.map(party, PartyOutput.class);
     }
@@ -97,20 +96,15 @@ public class PartyService {
     }
 
     private void validateInput(PartyInput partyInput, boolean isUpdate){
-        if (StringUtils.isBlank(partyInput.getEmail())){
-            throw new GenericOutputException("Invalid email");
+        if (StringUtils.isBlank(partyInput.getCode())){
+            throw new GenericOutputException("Invalid code");
         }
         if (StringUtils.isBlank(partyInput.getName())){
             throw new GenericOutputException("Invalid name");
         }
-        if (!StringUtils.isBlank(partyInput.getPassword())){
-            if (!partyInput.getPassword().equals(partyInput.getPasswordConfirm())){
-                throw new GenericOutputException("Passwords doesn't match");
-            }
-        } else {
-            if (!isUpdate) {
-                throw new GenericOutputException("Password doesn't match");
-            }
+        if (partyInput.getNumber() == null){
+                throw new GenericOutputException("Invalid number");
         }
     }
 }
+

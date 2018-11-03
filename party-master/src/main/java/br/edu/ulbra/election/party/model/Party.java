@@ -10,13 +10,13 @@ public class Party {
     private Long id;
 
     @Column(unique = true, nullable = false)
-    private String email;
+    private String code;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    private String password;
+    private Integer number;
 
     public Long getId() {
         return id;
@@ -26,12 +26,12 @@ public class Party {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getCode() {
+        return code;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setCode(String code) {
+        this.code = code;
     }
 
     public String getName() {
@@ -42,11 +42,11 @@ public class Party {
         this.name = name;
     }
 
-    public String getPassword() {
-        return password;
+    public Integer getNumber() {
+        return number;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setNumber(Integer number) {
+        this.number = number;
     }
 }

@@ -1,16 +1,10 @@
 package br.edu.ulbra.election.party;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.context.annotation.ComponentScan;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-public class PartyApplicationTests {
-
-	@Test
-	public void contextLoads() {
-	}
+@TestConfiguration
+@ComponentScan(basePackages = {"br.edu.ulbra.election.party"})
+public class TestConfig {
 
 }
