@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -99,6 +100,29 @@ public class PartyService {
         }
         if (partyInput.getNumber() == null){
                 throw new GenericOutputException("Invalid number");
+        }
+        List<PartyOutput> verifyCode = getAll();
+        for (PartyOutput partyOutput : verifyCode) {
+			String getCode = partyOutput.getCode();
+			if(getCode.equals(partyInput.getCode())){
+				throw new GenericOutputException("Código duplicado!");
+			}
+		}
+        Integer maxNumber = partyInput.getNumber();
+        Integer number = Integer.toString(maxNumber).length();
+		if(!(number.equals(2))) {
+			throw new GenericOutputException("O número do partido deve ter 2 dígitos!");
+		}
+		List<PartyOutput> verifyNumber = getAll();
+        for (PartyOutput partyOutput : verifyNumber) {
+			Integer getNumber = partyOutput.getNumber();
+			if(getNumber.equals(partyInput.getNumber())){
+				throw new GenericOutputException("Número duplicado!");
+			}
+		}
+        Integer maxName = partyInput.getName().length();
+        if(maxName < 5) {
+        	throw new GenericOutputException("Nome do partido deve ter no mínimo 5 letras!");
         }
     }
 }
