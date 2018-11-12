@@ -67,7 +67,23 @@ public class PartyService {
         if (party == null){
             throw new GenericOutputException(MESSAGE_PARTY_NOT_FOUND);
         }
-
+        
+        List<PartyOutput> verifyCode = getAll();
+        	for (PartyOutput partyOutput : verifyCode) {
+    			String getCode = partyOutput.getCode();
+    			if(getCode.equals(partyInput.getCode()) && !(partyOutput.getId().equals(partyId))){
+    				throw new GenericOutputException("Código duplicado!");
+    			}
+    		}
+        	
+        	List<PartyOutput> verifyNumber = getAll();
+        	for (PartyOutput partyOutput : verifyNumber) {
+				Integer getNumber = partyOutput.getNumber();
+				if(getNumber.equals(partyInput.getNumber()) && !(partyOutput.getId().equals(partyId))){
+					throw new GenericOutputException("Número duplicado!");
+				}
+			}
+        
         party.setCode(partyInput.getCode());
         party.setName(partyInput.getName());
         party.setNumber(partyInput.getNumber());
@@ -102,22 +118,26 @@ public class PartyService {
                 throw new GenericOutputException("Invalid number");
         }
         List<PartyOutput> verifyCode = getAll();
-        for (PartyOutput partyOutput : verifyCode) {
-			String getCode = partyOutput.getCode();
-			if(getCode.equals(partyInput.getCode())){
-				throw new GenericOutputException("Código duplicado!");
-			}
-		}
+        if(!isUpdate) {
+        	for (PartyOutput partyOutput : verifyCode) {
+    			String getCode = partyOutput.getCode();
+    			if(getCode.equals(partyInput.getCode())){
+    				throw new GenericOutputException("Código duplicado!");
+    			}
+    		}
+        }
         Integer maxNumber = partyInput.getNumber();
         Integer number = Integer.toString(maxNumber).length();
 		if(!(number.equals(2))) {
 			throw new GenericOutputException("O número do partido deve ter 2 dígitos!");
 		}
 		List<PartyOutput> verifyNumber = getAll();
-        for (PartyOutput partyOutput : verifyNumber) {
-			Integer getNumber = partyOutput.getNumber();
-			if(getNumber.equals(partyInput.getNumber())){
-				throw new GenericOutputException("Número duplicado!");
+		if(!isUpdate) {
+			for (PartyOutput partyOutput : verifyNumber) {
+				Integer getNumber = partyOutput.getNumber();
+				if(getNumber.equals(partyInput.getNumber())){
+					throw new GenericOutputException("Número duplicado!");
+				}
 			}
 		}
         Integer maxName = partyInput.getName().length();
