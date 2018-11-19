@@ -1,9 +1,9 @@
 server:
-  port: 8082
+  port: 8083
 
 spring:
   datasource:
-    url: jdbc:h2:C:\Users\Marcos Varallo\Documents\Temp
+    url: jdbc:h2:C:\Users\Marcos Varallo\Documents\Temp\party
     platform: h2
     username: sa
     driver-class-name: org.h2.Driver
